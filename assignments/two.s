@@ -51,7 +51,7 @@ _start:
 		jal x0, is_pal_loop
 		
 	make_small:
-		#check a3
+		#check a1
 		add t0, a1, s1
 		lbu t1, 0(t0)
 		li t2, 'A'     
@@ -62,7 +62,7 @@ _start:
 		sb t1, 0(t0)
 		
 	check_last:
-		#check a4
+		#check a2
 		add t0, a2, s1
 		lbu t1, 0(t0)
 		li t2, 'A'     
