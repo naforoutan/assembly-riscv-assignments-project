@@ -1,5 +1,6 @@
 .data
 dash: .asciz "*"
+message: .asciz "the top of the stack is: "
 
 .text
 .global _start
@@ -59,7 +60,7 @@ _start:
 			print:
 				beq t0, x0, end_print
 				addi t1, x0, 20
-				add t4, a1, -1
+				add t4, t0, -1
 				mul t1, t1, t4
 				add t2, sp, t1
 				lw t3, 0(t2)
@@ -95,6 +96,7 @@ _start:
 				sw ra, 8(sp)
 				sw a1, 12(sp)
 				sw a2, 16(sp)
+				
 				
 				addi a1, a1, 1
 				mv a0, a2
