@@ -1,5 +1,5 @@
 .data
-dash: .asciz "-"
+dash: .asciz "*"
 
 .text
 .global _start
@@ -28,14 +28,24 @@ _start:
 		if_empty_stack:
 			loop1:
 				beq a2, x0, end_loop
-				mv a0, a2
+				sub t0, a0, a2
+				addi sp, sp, -20
+				sw t0, 0(sp)
+				sw a0, 4(sp)
+				sw ra, 8(sp)
+				sw a1, 12(sp)
+				sw a2, 16(sp)
+				
 				addi a1, a1, 1
-				addi sp, sp, -8
-				sw ra, 4(sp)
-				sw a0, 0(sp)
+				mv a0, a2
 				jal ra, fun
-				#???
-				lw ra, 4(sp)
+				
+				lw a0, 4(sp)
+				lw ra, 8(sp)
+				lw a1, 12(sp)
+				lw a2, 16(sp)
+				addi sp, sp, 20
+				
 				addi a2, a2, -1
 				j loop1
 
@@ -48,7 +58,7 @@ _start:
 			add t0, a1, x0
 			print:
 				beq t0, x0, end_print
-				addi t1, x0, 8
+				addi t1, x0, 20
 				add t4, a1, -1
 				mul t1, t1, t4
 				add t2, sp, t1
@@ -68,8 +78,6 @@ _start:
 
 			end_print:
 				#print newline
-				mv a3, a0
-				mv a0, a2
 				li a7, 1
 				ecall
 				li a0, 10
@@ -81,17 +89,23 @@ _start:
 				beq a2, x0, end_loop
 				sub t0, a0, a2
 				
-				addi a1, a1, 1
-				addi sp, sp, -8
+				addi sp, sp, -20
 				sw t0, 0(sp)
-				sw ra, 4(sp)
+				sw a0, 4(sp)
+				sw ra, 8(sp)
+				sw a1, 12(sp)
+				sw a2, 16(sp)
 				
-				mv a3, a0
+				addi a1, a1, 1
 				mv a0, a2
 				jal ra, fun
-				#???
-				lw ra, 4(sp)
-				mv a0, a3
+				
+				lw a0, 4(sp)
+				lw ra, 8(sp)
+				lw a1, 12(sp)
+				lw a2, 16(sp)
+				addi sp, sp, 20
+				
 				addi a2, a2, -1
 				j loop2
 					

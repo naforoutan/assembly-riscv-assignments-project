@@ -12,9 +12,9 @@ void fun(string str, int num){
         }
     } else{
         if (num == 0) return;
-        cout << str << "-" << num << endl;
+        cout << str << "*" << num << endl;
         while(cpy != 0){
-            fun(str+"-"+to_string(num-cpy), cpy);
+            fun(str+"*"+to_string(num-cpy), cpy);
             cpy--;
         }
     }
